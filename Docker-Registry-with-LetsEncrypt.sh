@@ -6,9 +6,9 @@ sed -i 's/^SELINUX=enforcing$/SELINUX=disabled/' /etc/selinux/config
 
 # install letsencrypt
 yum -y install epel-release
-yum -y install certbot
 
-# Set Domain & Domain
+
+# Set Domain 
 set_domain(){
     echo "\033[1;34mPlease enter your domain:\033[0m"
     read domain
@@ -17,11 +17,24 @@ set_domain(){
     do
         echo "\033[1;31mInvalid domain.\033[0m"
         echo "\033[1;31mPlease try again:\033[0m"
-        read domain
+        read -p domain
         str=`echo $domain | grep '^\([a-zA-Z0-9_\-]\{1,\}\.\)\{1,\}[a-zA-Z]\{2,5\}'`
     done
     echo "\033[1;35mdomain = ${domain}\033[0m"
-
+}
+# Get certification
+get_cert(){
+    if [ -f /etc/letsencrypt/live/$domain/fullchain.pem ];then
+        echo "\033[1;32mcert already got, skip.\033[0m"
+    else
+        yum install -y certbot 
+        certbot certonly --cert-name $domain -d $domain --standalone --agree-tos --register-unsafely-without-email
+        if [ ! -f /etc/letsencrypt/live/$domain/fullchain.pem ];then
+            echo "\033[1;31mFailed to get cert.\033[0m"
+            exit 1
+        fi
+    fi
+}
 # Generate SSL certificate for domain
 certbot certonly --cert-name $domain -d $domain --standalone --agree-tos --register-unsafely-without-email
 
