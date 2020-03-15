@@ -20,7 +20,7 @@ cat cert.pem chain.pem > domain.crt
 mkdir /var/registry
 
 # https://docs.docker.com/registry/deploying/
-docker run -d -p 5000:5000 -p 443:443 --restart=always --name registry \
+docker run -d -p 443:5000 --restart=always --name registry \
   -v /var/registry:/var/lib/registry \
   -v /etc/letsencrypt/live/domain.example.com:/certs \
   -e REGISTRY_HTTP_ADDR=0.0.0.0:443 \
