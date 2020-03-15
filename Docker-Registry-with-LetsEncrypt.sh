@@ -33,10 +33,10 @@ mkdir /var/registry
 # https://docs.docker.com/registry/deploying/
 docker run -d -p 443:5000 --restart=always --name registry \
   -v /var/registry:/var/lib/registry \
-  -v /etc/letsencrypt/live/domain.example.com:/certs \
+  -v /etc/letsencrypt/live/$domain:/certs \
   -e REGISTRY_HTTP_ADDR=0.0.0.0:443 \
-  -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt \
-  -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key \
+  -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/$domain.crt \
+  -e REGISTRY_HTTP_TLS_KEY=/certs/$domain.key \
   registry:latest
   
 # List images
