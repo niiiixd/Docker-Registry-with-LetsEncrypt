@@ -10,14 +10,22 @@ yum -y install certbot
 
 # Set Domain & Domain
 set_domain(){
-    echo "\033[1;34m Please enter your domain: \033[0m"
+    echo "\033[1;34mPlease enter your domain:\033[0m"
     read domain
     str=`echo $domain | grep '^\([a-zA-Z0-9_\-]\{1,\}\.\)\{1,\}[a-zA-Z]\{2,5\}'`
+    while [ ! -n "${str}" ]
+    do
+        echo "\033[1;31mInvalid domain.\033[0m"
+        echo "\033[1;31mPlease try again:\033[0m"
+        read domain
+        str=`echo $domain | grep '^\([a-zA-Z0-9_\-]\{1,\}\.\)\{1,\}[a-zA-Z]\{2,5\}'`
+    done
+    echo "\033[1;35mdomain = ${domain}\033[0m"
 }
 set_mail(){
     echo "\033[1;34m Please enter your mail: \033[0m"
     read mail
-    str=`echo $mail | grep '^\([a-zA-Z0-9_\-]\{1,\}\.\)\{1,\}[a-zA-Z]\{2,5\}'`
+    echo "\033[1;35mdomain = ${domain}\033[0m"
 }
 # Generate SSL certificate for domain
 certbot certonly --keep-until-expiring --standalone -d $domain -m $mail
