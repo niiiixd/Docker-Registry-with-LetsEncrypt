@@ -21,14 +21,9 @@ set_domain(){
         str=`echo $domain | grep '^\([a-zA-Z0-9_\-]\{1,\}\.\)\{1,\}[a-zA-Z]\{2,5\}'`
     done
     echo "\033[1;35mdomain = ${domain}\033[0m"
-}
-set_mail(){
-    echo "\033[1;34m Please enter your mail: \033[0m"
-    read mail
-    echo "\033[1;35mdomain = ${domain}\033[0m"
-}
+
 # Generate SSL certificate for domain
-certbot certonly --keep-until-expiring --standalone -d $domain -m $mail
+certbot certonly --cert-name $domain -d $domain --standalone --agree-tos --register-unsafely-without-email
 
 # Setup letsencrypt certificates renewing
 cron_line="30 2 * * 1 certbot renew >> /var/log/letsencrypt-renew.log"
