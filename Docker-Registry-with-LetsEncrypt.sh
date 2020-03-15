@@ -2,45 +2,44 @@
 
 
 # Disable Selinux
-pre_install(){
+
     clear
     read -p "Press any key to start the installation." a
-    echo "\033[1;34mStart installing. This may take a while.\033[0m"
+    echo "Start installing. This may take a while."
 
     sed -i 's/^SELINUX=enforcing$/SELINUX=disabled/' /etc/selinux/config
     yum -y update
     yum install -y epel-release
     yum install -y certbot
-}
 
 # Set Domain 
-set_domain(){
+
     clear
-    echo "\033[1;34mPlease enter your domain:\033[0m"
+    echo "Please enter your domain:"
     read domain
     str=`echo $domain | grep '^\([a-zA-Z0-9_\-]\{1,\}\.\)\{1,\}[a-zA-Z]\{2,5\}'`
     while [ ! -n "${str}" ]
     do
-        echo "\033[1;31mInvalid domain.\033[0m"
-        echo "\033[1;31mPlease try again:\033[0m"
+        echo "Invalid domain."
+        echo "Please try again:"
         read -p domain
         str=`echo $domain | grep '^\([a-zA-Z0-9_\-]\{1,\}\.\)\{1,\}[a-zA-Z]\{2,5\}'`
     done
-    echo "\033[1;35mdomain = ${domain}\033[0m"
-}
+    echo "domain = ${domain}"
+
 # Get certification
-get_cert(){
+
     clear
     if [ -f /etc/letsencrypt/live/$domain/fullchain.pem ];then
-        echo "\033[1;32mcert already got, skip.\033[0m"
+        echo "cert already got, skip."
     else 
         certbot certonly --cert-name $domain -d $domain --standalone --agree-tos --register-unsafely-without-email
         if [ ! -f /etc/letsencrypt/live/$domain/fullchain.pem ];then
-            echo "\033[1;31mFailed to get cert.\033[0m"
+            echo "Failed to get cert."
             exit 1
         fi
     fi
-}
+
 # Setup letsencrypt certificates renewing
 cron_line="30 2 * * 1 certbot renew >> /var/log/letsencrypt-renew.log"
 (crontab -u root -l; echo "$cron_line" ) | crontab -u root -
