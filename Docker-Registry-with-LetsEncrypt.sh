@@ -4,10 +4,6 @@
 # Disable Selinux
 sed -i 's/^SELINUX=enforcing$/SELINUX=disabled/' /etc/selinux/config
 
-# install letsencrypt
-yum -y install epel-release
-
-
 # Set Domain 
 set_domain(){
     echo "\033[1;34mPlease enter your domain:\033[0m"
