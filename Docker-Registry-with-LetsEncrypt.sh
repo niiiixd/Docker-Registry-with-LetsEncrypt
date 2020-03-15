@@ -2,10 +2,20 @@
 
 
 # Disable Selinux
-sed -i 's/^SELINUX=enforcing$/SELINUX=disabled/' /etc/selinux/config
+pre_install(){
+    clear
+    read -p "Press any key to start the installation." a
+    echo "\033[1;34mStart installing. This may take a while.\033[0m"
+
+    sed -i 's/^SELINUX=enforcing$/SELINUX=disabled/' /etc/selinux/config
+    yum -y update
+    yum install -y epel-release
+    yum install -y certbot
+}
 
 # Set Domain 
 set_domain(){
+    clear
     echo "\033[1;34mPlease enter your domain:\033[0m"
     read domain
     str=`echo $domain | grep '^\([a-zA-Z0-9_\-]\{1,\}\.\)\{1,\}[a-zA-Z]\{2,5\}'`
@@ -20,10 +30,10 @@ set_domain(){
 }
 # Get certification
 get_cert(){
+    clear
     if [ -f /etc/letsencrypt/live/$domain/fullchain.pem ];then
         echo "\033[1;32mcert already got, skip.\033[0m"
-    else
-        yum install -y certbot 
+    else 
         certbot certonly --cert-name $domain -d $domain --standalone --agree-tos --register-unsafely-without-email
         if [ ! -f /etc/letsencrypt/live/$domain/fullchain.pem ];then
             echo "\033[1;31mFailed to get cert.\033[0m"
