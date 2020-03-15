@@ -35,9 +35,6 @@ get_cert(){
         fi
     fi
 }
-# Generate SSL certificate for domain
-certbot certonly --cert-name $domain -d $domain --standalone --agree-tos --register-unsafely-without-email
-
 # Setup letsencrypt certificates renewing
 cron_line="30 2 * * 1 certbot renew >> /var/log/letsencrypt-renew.log"
 (crontab -u root -l; echo "$cron_line" ) | crontab -u root -
