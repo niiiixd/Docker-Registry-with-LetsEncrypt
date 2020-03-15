@@ -9,14 +9,14 @@ set_domain(){
     echo "\033[1;34m Please enter your domain: \033[0m"
     read domain
     str=`echo $domain | grep '^\([a-zA-Z0-9_\-]\{1,\}\.\)\{1,\}[a-zA-Z]\{2,5\}'`
-
-set_email(){
+}
+set_mail(){
     echo "\033[1;34m Please enter your mail: \033[0m"
     read mail
     str=`echo $mail | grep '^\([a-zA-Z0-9_\-]\{1,\}\.\)\{1,\}[a-zA-Z]\{2,5\}'`
-
+}
 # Generate SSL certificate for domain
-certbot certonly --keep-until-expiring --standalone -d $domain --email $mail
+certbot certonly --keep-until-expiring --standalone -d $domain -m $mail
 
 # Setup letsencrypt certificates renewing
 cron_line="30 2 * * 1 certbot renew >> /var/log/letsencrypt-renew.log"
