@@ -1,4 +1,4 @@
-# Secure docker registry with LetsEncrypt
+# Secure docker registry with Let's Encrypt
 Deploy a docker registry with letsencrypt certificates on CentOS 7.
 The Registry is a stateless, highly scalable server side application that stores and lets you distribute Docker images. The Registry is open-source, under the permissive Apache license.
 
