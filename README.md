@@ -4,7 +4,9 @@ The Registry is a stateless, highly scalable server side application that stores
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
+These instuctions will help you to deploy docker registry on your local server for testing purposes.
+Additional notes about how to deploy this on a live system [Docker Registry](https://docs.docker.com/registry/)
+
 
 ### Prerequisites
 This shell script is customized for CentOS-7. In case you're using any of Debian distribution edit Pre RUN Registry section.
@@ -35,11 +37,6 @@ systemctl restart docker
 systemctl enable docker
 
 ```
-
-## Deployment
-
-Additional notes about how to deploy this on a live system [Docker Registry](https://docs.docker.com/registry/)
-
 ## Authors
 
 * **Sadegh Khademi** - *DevOps Engineer* - [Sadegh Khademi](https://github.com/niiiixd)
