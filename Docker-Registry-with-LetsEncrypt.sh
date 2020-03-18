@@ -16,7 +16,7 @@
     #curl -fsSL https://get.docker.com | sh
 
 # Enabling and Start Docker service
-    #systemctl restart dokcer
+    #systemctl restart docker
     #systemctl enable docker
 
 # Set Domain 
