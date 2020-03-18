@@ -1,16 +1,23 @@
 #!/usr/bin/env bash
 
 
+    clear
+    read -p "If you Didn't read README is better to do it first, If you read it befor press any key to start the installation." a
+    echo "Start installing. This may take a while."
 # Disable Selinux
 
-    clear
-    read -p "Press any key to start the installation." a
-    echo "Start installing. This may take a while."
+    #sed -i 's/^SELINUX=enforcing$/SELINUX=disabled/' /etc/selinux/config
+    
+    #yum -y update
+    #yum install -y epel-release
+    #yum install -y certbot
+    
+# Installing Docker
+    #curl -fsSL https://get.docker.com | sh
 
-    sed -i 's/^SELINUX=enforcing$/SELINUX=disabled/' /etc/selinux/config
-    yum -y update
-    yum install -y epel-release
-    yum install -y certbot
+# Enabling and Start Docker service
+    #systemctl restart dokcer
+    #systemctl enable docker
 
 # Set Domain 
 
